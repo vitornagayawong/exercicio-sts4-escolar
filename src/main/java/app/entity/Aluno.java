@@ -1,5 +1,7 @@
 package app.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,5 +36,8 @@ public class Aluno {
 	
 	@ManyToOne
     @JoinColumn(name = "turma_id")
+	@JsonIgnore 
 	private Turma turma;
+	
+	private boolean cadastroCompleto;
 }

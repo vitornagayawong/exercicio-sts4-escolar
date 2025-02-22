@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import app.entity.Aluno;
 import app.service.AlunoService;
@@ -79,4 +80,37 @@ public class AlunoController {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@GetMapping("/findByNomeStartingWith")
+	public ResponseEntity<List<Aluno>> findByNomeStartingWith(@RequestParam String nome) {
+		try {
+			List<Aluno> alunos = this.alunoService.findByNomeStartingWith(nome);
+			return new ResponseEntity<>(alunos, HttpStatus.OK);
+			
+		} catch(Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/findByTelefoneContaining")
+	public ResponseEntity<List<Aluno>> findByTelefoneContaining(@RequestParam String telefone) {
+		try {
+			List<Aluno> alunos = this.alunoService.findByTelefoneContaining(telefone);
+			return new ResponseEntity<>(alunos, HttpStatus.OK);
+		} catch(Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+			
+	}
+	
+	@GetMapping("/findByTurmaNome")
+	public ResponseEntity<List<Aluno>> findByTurmaNome(@RequestParam String nomeTurma) {
+		try {
+			List<Aluno> alunos = this.alunoService.findByTurmaNome(nomeTurma);
+		    return new ResponseEntity<>(alunos, HttpStatus.OK);
+		} catch(Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 }

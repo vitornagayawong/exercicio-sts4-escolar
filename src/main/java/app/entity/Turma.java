@@ -2,6 +2,8 @@ package app.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,25 +27,24 @@ import lombok.Setter;
 public class Turma {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;	
-	
+	private long id;
+
 	@NotNull
 	private String nome;
-	
+
 	private String semestre;
 	private String ano;
 	private String turno;
-	
+
 	@OneToMany(mappedBy = "turma")
 	private List<Aluno> alunos;
-	
-	 @ManyToMany
-	 @JoinTable(
-	     name = "turma_professor"	      
-	 )
-	 private List<Professor> professores;
-	 
-	 @ManyToOne(optional = false)
-	 @JoinColumn(name = "curso_id", nullable = false)
-	 private Curso curso;
+
+	@ManyToMany
+	@JoinTable(name = "turma_professor")
+	@JsonIgnore
+	private List<Professor> professores;
+
+	@ManyToOne
+	@JoinColumn(name = "curso_id")
+	private Curso curso;
 }

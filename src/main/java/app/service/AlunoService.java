@@ -16,6 +16,21 @@ public class AlunoService {
 	private AlunoRepository alunoRepository;
 	
 	public String save(Aluno aluno) {
+		
+		//Não permitir a INSERÇÃO de um aluno com CPF já cadastrado. Caso aconteça, lançar throw new RuntimeException("CPF já cadastrado!").
+		List<Aluno> alunoExistente = alunoRepository.findByCpf(aluno.getCpf());
+		
+        if (alunoExistente.size() != 0) {
+            throw new RuntimeException("CPF já cadastrado!");
+        }
+        
+        //Antes de INSERIR ou ATUALIZAR um aluno, caso o telefone esteja nulo, o atributo cadastroCompleto deve ser setado como false. Se estiver preenchido, setar como true.
+       if(aluno.getTelefone() == null) {
+    	   aluno.setCadastroCompleto(false);
+       } else {
+    	   aluno.setCadastroCompleto(true);    	   
+       }
+		
 		this.alunoRepository.save(aluno);
 		return "Aluno cadastrado com sucesso!";
 	}
@@ -33,5 +48,17 @@ public class AlunoService {
 	}
 	public List<Aluno> findAll() {
 		return this.alunoRepository.findAll();
-	}		
+	}	
+	
+	public List<Aluno> findByNomeStartingWith(String nome) {
+		return this.alunoRepository.findByNomeStartingWith(nome);
+	}
+	
+	public List<Aluno> findByTelefoneContaining(String telefone) {
+	    return this.alunoRepository.findByTelefoneContaining(telefone);
+	}
+	
+	public List<Aluno> findByTurmaNome(String nomeTurma) {
+	    return this.alunoRepository.findByTurmaNome(nomeTurma);
+	}
 }
