@@ -13,6 +13,7 @@ import app.repository.ProfessorRepository;
 
 @Service
 public class ProfessorService {
+	
 	@Autowired
 	private ProfessorRepository professorRepository;
 	

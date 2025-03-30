@@ -13,4 +13,10 @@ public interface ProfessorRepository extends JpaRepository<Professor, Long>{
 	List<Professor> findByEmailNotLike(String email);
 	
 	List<Professor> findByEmail(String email);
+	
+	//select from professor where nome like "%?" or especialidade like "%?"
+	
+	//select from professor where email not like "?"
+	
+	//select from professor where email = ?
 }
